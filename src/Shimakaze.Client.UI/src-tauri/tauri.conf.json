@@ -20,8 +20,8 @@
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+      "category": "Client",
+      "copyright": "frg2089",
       "deb": {
         "depends": []
       },
@@ -33,7 +33,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "shimakaze.client.ui",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
