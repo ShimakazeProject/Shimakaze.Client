@@ -1,0 +1,9 @@
+﻿<Project>
+  <PropertyGroup>
+    <BuildCommand>yarn tauri dev</BuildCommand>
+    <ProductionBuildCommand>yarn tauri build</ProductionBuildCommand>
+    <StartupCommand>yarn tauri build</StartupCommand>
+    <BuildOutputFolder>dist</BuildOutputFolder>
+  </PropertyGroup>
+  <Sdk Name="Microsoft.VisualStudio.JavaScript.SDK" Version="0.5.75-alpha" />
+</Project>
