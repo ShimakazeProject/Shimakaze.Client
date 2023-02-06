@@ -1,5 +1,28 @@
 {
   "unocss.root": [
     "src/Shimakaze.Client.UI"
-  ]
+  ],
+  "eslint.format.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.quiet": false,
+  "eslint.lintTask.enable": true,
+  "eslint.lintTask.options": "src/Shimakaze.Client.UI",
+  "eslint.workingDirectories": [
+    "src/Shimakaze.Client.UI"
+  ],
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }
