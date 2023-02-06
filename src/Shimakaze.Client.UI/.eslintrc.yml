@@ -4,6 +4,7 @@ env:
 extends:
   - plugin:vue/vue3-recommended
   - standard-with-typescript
+  - '@unocss'
 overrides: []
 parser: vue-eslint-parser
 parserOptions:
