@@ -572,6 +572,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/web-bluetooth@npm:^0.0.16":
+  version: 0.0.16
+  resolution: "@types/web-bluetooth@npm:0.0.16"
+  checksum: f68a630d062202a25c46d48686ebae1cf429dc70b4578fcf13b8357b2db63e4aedfb6f6d752bd388366be46ebd19c1c9de45f8a15c2631bb79e904fdfc454f94
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^5.0.0":
   version: 5.50.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.50.0"
@@ -1039,6 +1046,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/devtools-api@npm:^6.4.5":
+  version: 6.5.0
+  resolution: "@vue/devtools-api@npm:6.5.0"
+  checksum: ec819ef3a426e91d09e9cfefd2827e9ed8ec9d62bb3b3e0674f3da8c7e92a4b879c3b777dc7329172ca6fe2670b62dd5580d23160339208f0f5ae038f2e504ad
+  languageName: node
+  linkType: hard
+
 "@vue/reactivity-transform@npm:3.2.47":
   version: 3.2.47
   resolution: "@vue/reactivity-transform@npm:3.2.47"
@@ -1098,6 +1112,34 @@ __metadata:
   version: 3.2.47
   resolution: "@vue/shared@npm:3.2.47"
   checksum: 0aa711dc9160fa0e476e6e94eea4e019398adf2211352d0e4a672cfb6b65b104bbd5d234807d1c091107bdc0f5d818d0f12378987eb7861d39be3aa9f6cd6e3e
+  languageName: node
+  linkType: hard
+
+"@vueuse/core@npm:^9.12.0":
+  version: 9.12.0
+  resolution: "@vueuse/core@npm:9.12.0"
+  dependencies:
+    "@types/web-bluetooth": ^0.0.16
+    "@vueuse/metadata": 9.12.0
+    "@vueuse/shared": 9.12.0
+    vue-demi: "*"
+  checksum: bbbbd0a60f3cbda8e116c721f67319af42247af607d997e58d1f860660148ecbf58f90b8b3f38c6ecf87bc37a1a330b280050d883d79579ed72abf3b286b88cb
+  languageName: node
+  linkType: hard
+
+"@vueuse/metadata@npm:9.12.0":
+  version: 9.12.0
+  resolution: "@vueuse/metadata@npm:9.12.0"
+  checksum: ce732fbf313e3a3ed4ebddcace4cca05907c297103a20bc7e3e25cfb58dbce4b8e6b5d6a68a41922a821e07fa627321534068f9d494190d0bc5b95f1c29e8dcf
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:9.12.0":
+  version: 9.12.0
+  resolution: "@vueuse/shared@npm:9.12.0"
+  dependencies:
+    vue-demi: "*"
+  checksum: b359e78dddef960c7456c0bad7427ad255239740ae02485ac64ed5df3f58387253647cf243a0839f9eb014e91f315db850745ab5930e22a0c52434d1619bc04e
   languageName: node
   linkType: hard
 
@@ -1396,7 +1438,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.5.3":
+"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -2592,6 +2634,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.0.0":
+  version: 4.2.4
+  resolution: "immutable@npm:4.2.4"
+  checksum: 3be84eded37b05e65cad57bfba630bc1bf170c498b7472144bc02d2650cc9baef79daf03574a9c2e41d195ebb55a1c12c9b312f41ee324b653927b24ad8bcaa7
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.0.0, import-fresh@npm:^3.2.1":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -3706,6 +3755,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sass@npm:^1.58.0":
+  version: 1.58.0
+  resolution: "sass@npm:1.58.0"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: a7219634881d2de6441fb619787fb1a02e3fa0333fb715be26aa335ba49d6bdb4f1105d9df70a80a67200893022b08346745783dc49046095d94fc6e044492d6
+  languageName: node
+  linkType: hard
+
 "semver@npm:^6.3.0":
   version: 6.3.0
   resolution: "semver@npm:6.3.0"
@@ -3760,17 +3822,20 @@ __metadata:
     "@typescript-eslint/parser": ^5.50.0
     "@unocss/eslint-config": ^0.49.4
     "@vitejs/plugin-vue": ^4.0.0
+    "@vueuse/core": ^9.12.0
     eslint: ^8.0.1
     eslint-config-standard-with-typescript: latest
     eslint-plugin-import: ^2.25.2
     eslint-plugin-n: ^15.0.0
     eslint-plugin-promise: ^6.0.0
     eslint-plugin-vue: latest
+    sass: ^1.58.0
     typescript: "*"
     unocss: ^0.49.4
     vite: ^4.0.0
     vue: ^3.2.45
     vue-eslint-parser: ^9.1.0
+    vue-router: ^4.1.6
     vue-tsc: ^1.0.11
   languageName: unknown
   linkType: soft
@@ -3839,7 +3904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
+"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.1, source-map-js@npm:^1.0.2":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
@@ -4253,6 +4318,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-demi@npm:*":
+  version: 0.13.11
+  resolution: "vue-demi@npm:0.13.11"
+  peerDependencies:
+    "@vue/composition-api": ^1.0.0-rc.1
+    vue: ^3.0.0-0 || ^2.6.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  bin:
+    vue-demi-fix: bin/vue-demi-fix.js
+    vue-demi-switch: bin/vue-demi-switch.js
+  checksum: 0fbe9bf8ab7fe498ffa2bbd0cfc8f6f43a6bbaa5eda3e20ef1b70dca7c8b0ddb216a7ff2f632b694fe0735805638975abb441c621ec0bd2e6d4656353f316c15
+  languageName: node
+  linkType: hard
+
 "vue-eslint-parser@npm:^9.0.1, vue-eslint-parser@npm:^9.1.0":
   version: 9.1.0
   resolution: "vue-eslint-parser@npm:9.1.0"
@@ -4267,6 +4348,17 @@ __metadata:
   peerDependencies:
     eslint: ">=6.0.0"
   checksum: e2e6b05989294c4439d91283a78a0cb444cfba30f2715a5be1950d7815cadb5c8f449d9362a92bdd163cb8944abaac73bb076ce3c27b27586eaa4560002e6dfd
+  languageName: node
+  linkType: hard
+
+"vue-router@npm:^4.1.6":
+  version: 4.1.6
+  resolution: "vue-router@npm:4.1.6"
+  dependencies:
+    "@vue/devtools-api": ^6.4.5
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: c7f0156ac03a9561d110f5ff778121eee7c8c154be6ec5064558ba22ab5237db36f29ffffc95cc16d692cc68a26df0c434f395401c0e3b48f782c7bed51391c6
   languageName: node
   linkType: hard
 
