@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
-    "vue": "^3.2.45"
+    "@vueuse/core": "^9.12.0",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.2",
@@ -26,6 +28,7 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "latest",
+    "sass": "^1.58.0",
     "typescript": "*",
     "unocss": "^0.49.4",
     "vite": "^4.0.0",

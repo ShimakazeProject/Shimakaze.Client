@@ -17,7 +17,19 @@
     "skipLibCheck": true,
     "types": [
       "vite/client"
-    ]
+    ],
+    "strictNullChecks": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@c/*": [
+        "./src/components/*"
+      ],
+      "@p/*": [
+        "./src/pages/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",

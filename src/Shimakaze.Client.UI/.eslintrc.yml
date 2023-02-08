@@ -4,11 +4,11 @@ env:
 extends:
   - plugin:vue/vue3-recommended
   - standard-with-typescript
-  - '@unocss'
+  - "@unocss"
 overrides: []
 parser: vue-eslint-parser
 parserOptions:
-  parser: '@typescript-eslint/parser'
+  parser: "@typescript-eslint/parser"
   ecmaVersion: latest
   sourceType: module
   extraFileExtensions:
@@ -18,4 +18,8 @@ parserOptions:
     - ./tsconfig.node.json
 plugins:
   - vue
-rules: {}
+rules:
+  "@typescript-eslint/strict-boolean-expressions":
+    - off
+  vue/valid-attribute-name:
+    - off
