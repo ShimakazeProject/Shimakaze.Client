@@ -23,7 +23,10 @@
         content="战役"
         @click="go('/campaign')"
       />
-      <SCButton content="遭遇战" />
+      <SCButton
+        content="遭遇战"
+        @click="go('/skirmish')"
+      />
       <SCButton content="在线游戏" />
       <SCButton content="统计" />
       <SCButton content="设置" />
