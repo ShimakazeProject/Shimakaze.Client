@@ -1,4 +1,4 @@
-<template>
+<template path="/">
 <ClientButton
   v-for="button, index in buttons" :key="index"
   :content="button.name"

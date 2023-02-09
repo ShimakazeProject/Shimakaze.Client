@@ -1,12 +1,9 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
-import HomePage from '@p/HomePage.vue'
+import routes from 'virtual:inline-router'
+
+console.log(routes)
 
 export const router = createRouter({
   history: createMemoryHistory(),
-  routes: [
-    {
-      path: '/',
-      component: HomePage
-    }
-  ]
+  routes
 })
