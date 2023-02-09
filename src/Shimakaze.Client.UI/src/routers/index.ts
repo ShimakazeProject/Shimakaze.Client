@@ -33,6 +33,19 @@ const router = createRouter({
   })
 })
 
+router.afterEach((to, from) => {
+  let transition: string
+  if (from.fullPath === to.fullPath) {
+    transition = 'reload'
+  } else if (to.fullPath === '/') {
+    transition = 'pop'
+  } else {
+    const toDepth = to.path.split('/').length
+    const fromDepth = from.path.split('/').length
+    transition = toDepth < fromDepth ? 'pop' : 'push'
+  }
+  to.meta.transition = transition
+})
 export const go = async (path: keyof typeof routes | 'back'): Promise<void> => {
   if (path === 'back') {
     router.back()
