@@ -4,10 +4,12 @@ import {
 } from 'vue-router'
 import MainPage from '@/pages/MainPage.vue'
 import CampaignPage from '@/pages/CampaignPage.vue'
+import SkirmishPage from '@/pages/SkirmishPage.vue'
 
 const _routes = {
   '/': MainPage,
-  '/campaign': CampaignPage
+  '/campaign': CampaignPage,
+  '/skirmish': SkirmishPage
 }
 
 type RoutePath = keyof typeof _routes
