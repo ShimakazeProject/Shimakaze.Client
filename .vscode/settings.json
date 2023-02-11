@@ -11,7 +11,12 @@
     "src/Shimakaze.Client.UI"
   ],
   "[vue]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "Vue.volar",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.fixAll.stylelint": true,
+      "source.fixAll.eslint": true,
+    }
   },
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -25,4 +30,23 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+  "rust-analyzer.linkedProjects": [
+    "src/Shimakaze.Client.UI/src-tauri"
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "stylelint.enable": true,
+  "stylelint.packageManager": "yarn",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "vue",
+    "scss",
+    "sass"
+  ]
 }
