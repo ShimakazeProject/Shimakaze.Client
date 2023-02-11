@@ -23,3 +23,5 @@ rules:
     - off
   vue/valid-attribute-name:
     - off
+  vue/max-attributes-per-line:
+    - off

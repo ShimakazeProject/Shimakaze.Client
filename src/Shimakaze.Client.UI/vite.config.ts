@@ -20,6 +20,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '@m': path.resolve('src', 'models'),
       '@p': path.resolve('src', 'pages'),
       '@c': path.resolve('src', 'components'),
       '@': path.resolve('src')
