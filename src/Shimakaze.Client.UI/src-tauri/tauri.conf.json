@@ -20,7 +20,7 @@
     },
     "bundle": {
       "active": true,
-      "category": "Client",
+      "category": "Game",
       "copyright": "frg2089",
       "deb": {
         "depends": []

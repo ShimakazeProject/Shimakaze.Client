@@ -20,7 +20,7 @@
       p-2
     >
       <div flex-1 />
-      <SCButton
+      <ClientButton
         content="返回"
         @click="go('back')"
       />
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import SCButton from '@/components/SCButton.vue'
+import ClientButton from '@/components/ClientButton.vue'
 import { go } from '@/routers'
 
 </script>
