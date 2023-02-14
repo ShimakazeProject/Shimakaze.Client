@@ -1,0 +1,48 @@
+{
+  "eslint.format.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.quiet": false,
+  "eslint.lintTask.enable": true,
+  "eslint.workingDirectories": [
+    "src/Shimakaze.Client.UI"
+  ],
+  "rust-analyzer.linkedProjects": [
+    "src/Shimakaze.Client.UI/src-tauri"
+  ],
+  "stylelint.enable": true,
+  "stylelint.packageManager": "yarn",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "vue",
+    "scss",
+    "sass"
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.fixAll.stylelint": true,
+      "source.fixAll.eslint": true,
+    }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  }
+}
