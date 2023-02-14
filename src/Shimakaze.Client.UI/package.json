@@ -26,6 +26,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "latest",
     "postcss-html": "^1.5.0",
+    "sass": "^1.58.1",
     "stylelint": "^15.1.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^9.0.0",
