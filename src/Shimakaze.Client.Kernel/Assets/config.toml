@@ -1,0 +1,5 @@
+[Main]
+
+[[Main.Buttons]]
+uid='main'
+target='/campaign'
