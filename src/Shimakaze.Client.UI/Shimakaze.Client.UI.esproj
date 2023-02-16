@@ -1,9 +1,15 @@
-﻿<Project>
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.SDK/0.5.75-alpha">
+    
   <PropertyGroup>
-    <BuildCommand>yarn tauri dev</BuildCommand>
+    <TargetFramework>net7.0</TargetFramework>
+    <BuildCommand>yarn tauri build</BuildCommand>
     <ProductionBuildCommand>yarn tauri build</ProductionBuildCommand>
-    <StartupCommand>yarn tauri build</StartupCommand>
+    <StartupCommand>yarn tauri dev</StartupCommand>
     <BuildOutputFolder>dist</BuildOutputFolder>
   </PropertyGroup>
-  <Sdk Name="Microsoft.VisualStudio.JavaScript.SDK" Version="0.5.75-alpha" />
+
+  <Target Name="BuildBackEnd" BeforeTargets="CoreCompile">
+    <MSBuild Projects="../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj" Properties="OutputPath=$(MSBuildThisFileDirectory)/bin"/>
+  </Target>
+
 </Project>
