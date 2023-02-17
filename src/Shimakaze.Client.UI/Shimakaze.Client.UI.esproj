@@ -1,15 +1,24 @@
 ﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.SDK/0.5.75-alpha">
-    
+
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <BuildCommand>yarn tauri build</BuildCommand>
-    <ProductionBuildCommand>yarn tauri build</ProductionBuildCommand>
-    <StartupCommand>yarn tauri dev</StartupCommand>
+    <!-- Hack CoreCompile -->
+    <NewBuildCommand>yarn tauri dev --exit-on-panic</NewBuildCommand>
+    <ProductionBuildCommand>yarn tauri build --exit-on-panic</ProductionBuildCommand>
+    <StartupCommand>yarn
+      tauri dev</StartupCommand>
     <BuildOutputFolder>dist</BuildOutputFolder>
   </PropertyGroup>
 
-  <Target Name="BuildBackEnd" BeforeTargets="CoreCompile">
-    <MSBuild Projects="../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj" Properties="OutputPath=$(MSBuildThisFileDirectory)/bin"/>
+  <Target Name="BuildBackEnd" BeforeTargets="NewCoreCompile">
+    <MSBuild Projects="../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj"
+      Properties="OutputPath=$(MSBuildThisFileDirectory)/src-tauri/bin" />
+  </Target>
+
+  <!-- Hack CoreCompile -->
+  <Target Name="NewCoreCompile" BeforeTargets="CoreCompile">
+    <Exec Command="$(NewBuildCommand)" WorkingDirectory="$(BuildCommandWorkingDirectory)"
+      Condition=" '$(NewBuildCommand)' != '' " UseUtf8Encoding="Always" />
   </Target>
 
 </Project>

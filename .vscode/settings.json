@@ -7,7 +7,7 @@
     "src/Shimakaze.Client.UI"
   ],
   "rust-analyzer.linkedProjects": [
-    "src/Shimakaze.Client.UI/src-tauri"
+    "src/Shimakaze.Client.UI/src-tauri/Cargo.toml"
   ],
   "stylelint.enable": true,
   "stylelint.packageManager": "yarn",
