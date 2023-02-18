@@ -5,6 +5,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <CopyAssets Condition=" '$(CopyAssets)' == '' ">true</CopyAssets>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets/**/*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Assets/**/*">
+      <CopyToOutputDirectory Condition=" '$(CopyAssets)' == 'true' ">PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

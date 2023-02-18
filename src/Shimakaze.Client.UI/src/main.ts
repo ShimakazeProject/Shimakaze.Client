@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import '@/style.css'
+import App from '@/App.vue'
+import { system } from '@a/kernel'
 
-import { Kernel } from './apis/base'
-
-Kernel.instance.call('system/methods').then(console.info).catch(console.warn)
+system().then(console.log).catch(console.error)
 
 createApp(App).mount('#app')

@@ -65,7 +65,7 @@ export class Kernel {
     })
   }
 
-  public async call<T> (method: string): Promise<T> {
+  public async call<T> (method: string, ...params: any[]): Promise<T> {
     const _child = await this._ready
 
     let id = crypto.randomUUID()
@@ -77,7 +77,7 @@ export class Kernel {
       this._pool.set(id, { resolve, reject })
     })
 
-    const request = { jsonrpc: '2.0', method, id }
+    const request = { jsonrpc: '2.0', method, id, params }
 
     await _child.write(JSON.stringify(request) + '\n')
 
@@ -121,4 +121,8 @@ export class Kernel {
   private readonly _logger = (log: any): void => {
     console.log('日志', log)
   }
+}
+
+export const system = async (): Promise<string[]> => {
+  return await Kernel.instance.call<string[]>('system/methods')
 }
