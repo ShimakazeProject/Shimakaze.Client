@@ -1,0 +1,56 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Tauri Development Debug",
+      "cargo": {
+        "args": [
+          "build",
+          "--manifest-path=./src/Shimakaze.Client.UI/src-tauri/Cargo.toml",
+          "--no-default-features"
+        ]
+      },
+      "cwd": "${workspaceFolder}/src/Shimakaze.Client.UI/",
+      // task for the `beforeDevCommand` if used, must be configured in `.vscode/tasks.json`
+      "preLaunchTask": "ui:dev"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Tauri Production Debug",
+      "cargo": {
+        "args": [
+          "build",
+          "--release",
+          "--manifest-path=./src/Shimakaze.Client.UI/src-tauri/Cargo.toml"
+        ]
+      },
+      "cwd": "${workspaceFolder}/src/Shimakaze.Client.UI/",
+      // task for the `beforeBuildCommand` if used, must be configured in `.vscode/tasks.json`
+      "preLaunchTask": "ui:build"
+    },
+    {
+      // Use IntelliSense to find out which attributes exist for C# debugging
+      // Use hover for the description of the existing attributes
+      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": ".NET Core Launch (console)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      // If you have changed target frameworks, make sure to update the program path.
+      "program": "${workspaceFolder}/src/Shimakaze.Client.Kernel/bin/Debug/net7.0/Shimakaze.Client.Kernel.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Shimakaze.Client.Kernel",
+      // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
+}

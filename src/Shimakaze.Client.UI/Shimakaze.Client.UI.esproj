@@ -4,15 +4,22 @@
     <TargetFramework>net7.0</TargetFramework>
     <!-- Hack CoreCompile -->
     <NewBuildCommand>yarn tauri dev --exit-on-panic</NewBuildCommand>
-    <ProductionBuildCommand>yarn tauri build --exit-on-panic</ProductionBuildCommand>
-    <StartupCommand>yarn
-      tauri dev</StartupCommand>
+    <ProductionBuildCommand>yarn tauri build</ProductionBuildCommand>
+    <StartupCommand>yarn tauri dev</StartupCommand>
     <BuildOutputFolder>dist</BuildOutputFolder>
   </PropertyGroup>
 
   <Target Name="BuildBackEnd" BeforeTargets="NewCoreCompile">
-    <MSBuild Projects="../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj"
-      Properties="OutputPath=$(MSBuildThisFileDirectory)/src-tauri/bin" />
+    <ItemGroup>
+      <AssetsFile Include="$(MSBuildThisFileDirectory)../Shimakaze.Client.Kernel/Assets/**/*"/>
+    </ItemGroup>
+    <MSBuild
+      Projects="$(MSBuildThisFileDirectory)../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj"
+      Properties="OutputPath=$(MSBuildThisFileDirectory)src-tauri/bin;CopyAssets=false" />
+
+    <Copy SourceFiles="@(AssetsFile)"
+      DestinationFiles="$(MSBuildThisFileDirectory)src-tauri/Assets/%(RecursiveDir)%(Filename)%(Extension)"
+      SkipUnchangedFiles="true" />
   </Target>
 
   <!-- Hack CoreCompile -->
