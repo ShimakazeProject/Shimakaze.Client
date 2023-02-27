@@ -30,6 +30,7 @@ export default defineConfig({
       /* eslint-disable @typescript-eslint/comma-dangle */
       '@': path.resolve(__dirname, 'src'),
       '@a': path.resolve(__dirname, 'src', 'apis'),
+      '@p': path.resolve(__dirname, 'src', 'pages'),
       /* eslint-enable @typescript-eslint/comma-dangle */
     }
   }

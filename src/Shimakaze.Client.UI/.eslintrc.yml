@@ -25,3 +25,12 @@ rules:
     - off
   vue/max-attributes-per-line:
     - off
+  vue/max-len:
+    - warn
+  vue/html-indent:
+    - warn
+    - 2
+    - baseIndent: 0
+  vue/component-name-in-template-casing:
+    - warn
+    - 'PascalCase'
