@@ -47,5 +47,8 @@
   },
   "[scss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
-  }
+  },
+  "editor.rulers": [
+    80
+  ]
 }

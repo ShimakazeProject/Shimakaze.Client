@@ -18,6 +18,9 @@ parserOptions:
 plugins:
   - vue
 rules:
+  max-len:
+    - warn
+    - code: 80
   "@typescript-eslint/strict-boolean-expressions":
     - off
   vue/max-attributes-per-line:
