@@ -13,6 +13,13 @@ export const init = async (
   if (failbackLang) {
     failback = await api.init(failbackLang)
   }
+  document.querySelector('html')
+    ?.setAttribute(
+      'lang',
+      current?.metadata.language ??
+      failback?.metadata.language ??
+      'undefined'
+    )
 }
 
 export const get = (key: string): string =>

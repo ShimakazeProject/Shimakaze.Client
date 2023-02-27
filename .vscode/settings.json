@@ -26,12 +26,7 @@
   "less.validate": false,
   "scss.validate": false,
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar",
-    "editor.codeActionsOnSave": {
-      "source.fixAll": true,
-      "source.fixAll.stylelint": true,
-      "source.fixAll.eslint": true,
-    }
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -50,5 +45,6 @@
   },
   "editor.rulers": [
     80
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
