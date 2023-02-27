@@ -1,128 +1,119 @@
-import { type Child, Command } from '@tauri-apps/api/shell'
+import { Command } from '@tauri-apps/api/shell'
 
-interface IDataResponse<T> {
-  jsonrpc: '2.0'
-  result: T
-  id: string
-}
-
-interface IErrorResponse {
-  jsonrpc: '2.0'
-  error: {
-    code: number
-    message: string
-    data: any
-  }
-  id: string
-}
-
-type IJsonRPCResponse<T> = IDataResponse<T> | IErrorResponse
-function isDataResponse<T> (response: IJsonRPCResponse<T>): response is IDataResponse<T> {
-  return 'result' in response
-}
-function isJsonRPCResponse<T> (response: any): response is IJsonRPCResponse<T> {
-  return 'jsonrpc' in response
-}
+// =====================================
+//
+//                类型守卫
+//
+// =====================================
 
 /**
- * 后端内核
+ * 类型守卫 - 判断后端返回的数据是否是一个JsonRPC Response对象
+ * @param response 后端返回的数据
+ * @returns 是否是一个JsonRPC Response对象
  */
-export class Kernel {
-  /**
-   * 单例设计
-   */
-  private static _instance?: Kernel = undefined
+const isLogMessage = (response: ApiTypes.ServerMessage):
+  response is ApiTypes.LogMessage => 'LogLevel' in response
 
-  /**
-   * 获取唯一的内核控制器实例
-   */
-  public static get instance (): Kernel {
-    return (Kernel._instance ??= new Kernel())
-  }
+/**
+ * 类型守卫 - 判断后端返回的数据是否是一个JsonRPC Response对象
+ * @param response 后端返回的数据
+ * @returns 是否是一个JsonRPC Response对象
+ */
+const isJsonRPCResponse = (response: ApiTypes.ServerMessage):
+  response is ApiTypes.IJsonRPCResponse => 'jsonrpc' in response
+/**
+ * 类型守卫 - 判断后端返回的JsonRPC是否是数据Response
+ * @param response JsonRPC Response对象
+ * @returns 是否是数据Response
+ */
+const isDataResponse = <T>(response: ApiTypes.IJsonRPCResponse):
+  response is ApiTypes.IJsonRPCDataResponse<T> => 'result' in response
+/**
+ * 类型守卫 - 判断后端返回的JsonRPC是否是错误Response
+ * @param response JsonRPC Response对象
+ * @returns 是否是数据Response
+ */
+const isErrorResponse = (response: ApiTypes.IJsonRPCResponse):
+  response is ApiTypes.IJsonRPCErrorResponse => 'error' in response
 
-  private readonly _ready: Promise<Child>
-  private readonly _command: Command
-  private readonly _pool = new Map<string, {
-    resolve: (data: any) => void
-    reject: (data: any) => void
-  }>()
+// =====================================
+//
+//                后端内核
+//
+// =====================================
 
-  private constructor () {
-    this._command = new Command('Shimakaze.Client.Kernel', 'bin/Shimakaze.Client.Kernel.dll')
-
-    this._command.stdout.on('data', this._stdout)
-    this._command.stderr.on('data', this._stderr)
-    let _child: Child
-    this._ready = new Promise((resolve, reject) => {
-      if (_child) {
-        resolve(_child)
-      } else {
-        this._command.spawn().then(v => {
-          _child = v
-          resolve(_child)
-        }).catch(reject)
-      }
-    })
-  }
-
-  public async call<T> (method: string, ...params: any[]): Promise<T> {
-    const _child = await this._ready
-
-    let id = crypto.randomUUID()
-    const result = new Promise<T>((resolve, reject) => {
-      while (this._pool.has(id)) {
+/**
+ * 调用后端方法
+ * @param method 方法名
+ * @param params 方法参数
+ * @returns 后端响应
+ */
+export const call = async <T>(
+  method: string, ...params: any[]
+): Promise<T> => {
+  let id = crypto.randomUUID()
+  const result = new Promise<T>(
+    (resolve, reject) => {
+      while (jrpcPool.has(id)) {
         id = crypto.randomUUID()
       }
 
-      this._pool.set(id, { resolve, reject })
+      jrpcPool.set(id, { resolve, reject })
     })
 
-    const request = { jsonrpc: '2.0', method, id, params }
+  const request = { jsonrpc: '2.0', method, id, params }
 
-    await _child.write(JSON.stringify(request) + '\n')
+  await child.write(JSON.stringify(request) + '\n')
 
-    return await result
-  }
-
-  private readonly _stdout = (raw: string): void => {
-    const data = JSON.parse(raw)
-
-    if (isJsonRPCResponse(data)) {
-      this._jsonRPCResponseHandler(data)
-    } else {
-      this._logger(data)
-    }
-  }
-
-  private readonly _jsonRPCResponseHandler = (data: IJsonRPCResponse<any>): void => {
-    const callback = this._pool.get(data.id)
-    if (callback == null) {
-      console.log('找不到请求的响应', data)
-      return
-    }
-
-    const { resolve, reject } = callback
-
-    if (isDataResponse(data)) {
-      resolve(data.result)
-    } else {
-      reject(data.error)
-    }
-  }
-
-  private readonly _stderr = (data: any): void => {
-    console.error(data)
-  }
-
-  private readonly _onerror = (e: any): void => {
-    console.error(e)
-  }
-
-  private readonly _logger = (log: any): void => {
-    console.log('日志', log)
-  }
+  return await result
 }
 
-export const system = async (): Promise<string[]> => {
-  return await Kernel.instance.call<string[]>('system/methods')
+/**
+ * 数据解析器
+ * @param json 后端发送的数据
+ */
+const parser = (json: string): void => {
+  try {
+    // 尝试解析JSON数据
+    const data = JSON.parse(json)
+
+    if (isLogMessage(data)) {
+      // 判断是否是服务器日志
+      console.info(
+        `[${data.LogLevel}] ${data.Category}: ${data.Message}`,
+        data)
+    } else if (isJsonRPCResponse(data)) {
+      // 判断是否是JsonRPC响应
+      const callback = jrpcPool.get(data.id)
+      // 根据Id去JsonRPC池中找对应的回调
+      if (!callback) {
+        // 找不到回调
+        console.warn('不被需要的响应', data)
+      } else if (isDataResponse<object>(data)) {
+        // 后端函数执行成功回调
+        callback.resolve(data.result)
+      } else if (isErrorResponse(data)) {
+        // 后端函数执行失败回调
+        callback.reject(data.error)
+      } else {
+        // 未知的JsonRPC响应类型
+        console.warn('未知的JsonRPC响应类型', data)
+      }
+    } else {
+      console.log(data)
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
+const jrpcPool = new Map<string, ApiTypes.KernelCallback>()
+const command = new Command(
+  'Shimakaze.Client.Kernel',
+  'bin/Shimakaze.Client.Kernel.dll'
+)
+const child = await command.spawn()
+command.stdout.on('data', parser)
+command.stderr.on('data', console.error)
+
+export const system = async (): Promise<string[]> =>
+  await call<string[]>('system/methods')
