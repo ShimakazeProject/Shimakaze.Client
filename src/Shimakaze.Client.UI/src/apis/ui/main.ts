@@ -1,5 +1,5 @@
-import { Kernel } from '@a/kernel'
+import { call } from '@a/kernel'
 
-export const buttons = async (): Promise<ApiTypes.Button> => {
-  return await Kernel.instance.call<ApiTypes.Button>('ui/main/buttons')
+export const buttons = async (): Promise<ApiTypes.Button[]> => {
+  return await call<ApiTypes.Button[]>('ui/main/buttons')
 }
