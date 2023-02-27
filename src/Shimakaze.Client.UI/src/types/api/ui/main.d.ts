@@ -1,3 +1,3 @@
-declare namespace ApiTypes{
+declare namespace ApiTypes {
   export interface Button { uid: string, target: string }
 }
