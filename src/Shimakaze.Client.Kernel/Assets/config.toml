@@ -1,5 +1,5 @@
 [Main]
 
 [[Main.Buttons]]
-uid = 'campaign'
+uid = 'uid.campaign'
 target = '/campaign'
