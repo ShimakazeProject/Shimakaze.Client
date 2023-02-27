@@ -1,11 +1,10 @@
-declare namespace ApiTypes{
+declare namespace ApiTypes {
+  export interface I18nMetadata {
+    language: string
+    author: string
+  }
   export interface I18n {
-    metadata: {
-      language: string
-      author: string
-    }
-    lang: {
-      uid: Record<string, string>
-    }
+    metadata: I18nMetadata
+    lang: Record<string, string>
   }
 }
