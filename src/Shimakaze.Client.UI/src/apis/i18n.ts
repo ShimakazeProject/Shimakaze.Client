@@ -1,5 +1,6 @@
-import { Kernel } from '@a/kernel'
+import { call } from '@a/kernel'
 
-export const init = async (): Promise<ApiTypes.I18n> => {
-  return await Kernel.instance.call<ApiTypes.I18n>('i18n/init', 'zh-Hans')
-}
+export const init = async (
+  lang: string
+): Promise<ApiTypes.I18n> =>
+  await call('i18n/init', lang)

@@ -3,4 +3,4 @@ author = 'frg2089'
 Language = 'zh-Hans'
 
 [lang]
-uid.campaign = '遭遇战'
+'uid.campaign' = '遭遇战'
