@@ -1,4 +1,5 @@
 import { Command } from '@tauri-apps/api/shell'
+import { once, TauriEvent } from '@tauri-apps/api/event'
 
 // =====================================
 //
@@ -51,23 +52,28 @@ const isErrorResponse = (response: ApiTypes.IJsonRPCResponse):
 export const call = async <T>(
   method: string, ...params: any[]
 ): Promise<T> => {
+  if (!window.kernel) {
+    throw new Error('must be inited')
+  }
   let id = crypto.randomUUID()
   const result = new Promise<T>(
     (resolve, reject) => {
-      while (jrpcPool.has(id)) {
+      if (!window.kernel) {
+        throw new Error('must be inited')
+      }
+      while (id in window.kernel.jrpcPool) {
         id = crypto.randomUUID()
       }
 
-      jrpcPool.set(id, { resolve, reject })
+      window.kernel.jrpcPool[id] = { resolve, reject }
     })
 
   const request = { jsonrpc: '2.0', method, id, params }
 
-  await child.write(JSON.stringify(request) + '\n')
+  await window.kernel.child.write(JSON.stringify(request) + '\n')
 
   return await result
 }
-
 /**
  * 数据解析器
  * @param json 后端发送的数据
@@ -84,7 +90,7 @@ const parser = (json: string): void => {
         data)
     } else if (isJsonRPCResponse(data)) {
       // 判断是否是JsonRPC响应
-      const callback = jrpcPool.get(data.id)
+      const callback = window.kernel?.jrpcPool[data.id]
       // 根据Id去JsonRPC池中找对应的回调
       if (!callback) {
         // 找不到回调
@@ -106,14 +112,28 @@ const parser = (json: string): void => {
     console.error(error)
   }
 }
-const jrpcPool = new Map<string, ApiTypes.KernelCallback>()
-const command = new Command(
-  'Shimakaze.Client.Kernel',
-  'bin/Shimakaze.Client.Kernel.dll'
-)
-const child = await command.spawn()
-command.stdout.on('data', parser)
-command.stderr.on('data', console.error)
 
+if (!window.kernel) {
+  const jrpcPool: Record<string, ApiTypes.KernelCallback> = {}
+  const command = new Command(
+    'Shimakaze.Client.Kernel',
+    'bin/Shimakaze.Client.Kernel.dll'
+  )
+  const child = await command.spawn()
+  command.stdout.on('data', parser)
+  command.stderr.on('data', console.error)
+  const close = (): void => {
+    child.kill().catch(console.error)
+  }
+  window.addEventListener('unload', close)
+  window.addEventListener('close', close)
+  await once(TauriEvent.WINDOW_DESTROYED, close)
+
+  window.kernel = {
+    jrpcPool,
+    command,
+    child
+  }
+}
 export const system = async (): Promise<string[]> =>
   await call<string[]>('system/methods')
