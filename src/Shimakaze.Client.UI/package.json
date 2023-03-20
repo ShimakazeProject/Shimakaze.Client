@@ -28,6 +28,7 @@
     "eslint-plugin-vue": "latest",
     "glob": "^9.0.1",
     "htmlparser2": "^8.0.1",
+    "minimatch": "^7.4.2",
     "postcss-html": "^1.5.0",
     "sass": "^1.58.1",
     "stylelint": "^15.1.0",

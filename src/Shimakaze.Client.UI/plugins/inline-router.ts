@@ -4,7 +4,13 @@ import glob from 'glob'
 import { parseDocument, DomUtils } from 'htmlparser2'
 import { info } from 'node:console'
 
+/**
+ * Vite 行内路由插件
+ * @param config 配置项
+ * @author @frg2089
+ */
 export default function InlineRouter (): Plugin {
+  // 虚拟模块Id
   const virtualModuleId = 'virtual:inline-router'
   const resolvedVirtualModuleId = '\0' + virtualModuleId
   const record: Record<string, string> = {}
@@ -18,7 +24,7 @@ export default function InlineRouter (): Plugin {
       'template', dom, undefined, 1
     )[0]?.attribs
     if (!attributes || !('path' in attributes)) return
-    info('page:', `'${attributes.path}'`, 'as', page)
+    info('page:', attributes.path, 'as', page)
     record[attributes.path] = page.replace('@/pages/', '@p/')
   }
 

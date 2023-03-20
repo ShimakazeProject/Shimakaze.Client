@@ -2,10 +2,16 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
 import InlineRouter from './plugins/inline-router'
+import inlineRouter from './plugins/InlineRouter'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    inlineRouter({
+      source: 'src/pages/**/*.vue',
+      base: __dirname,
+      pathHandler: s => s.replace('/src', '@')
+    }),
     InlineRouter(),
     vue()
   ],
