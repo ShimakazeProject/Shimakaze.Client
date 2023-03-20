@@ -34,3 +34,5 @@ rules:
   vue/component-name-in-template-casing:
     - warn
     - 'PascalCase'
+  vue/multi-word-component-names:
+    - off

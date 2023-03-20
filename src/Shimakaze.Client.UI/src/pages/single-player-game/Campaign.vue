@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import ClientButton from '@/components/ClientButton.vue'
+import ClientButton from '@/components/Button.vue'
 import { router } from '@/router'
 
 </script>
