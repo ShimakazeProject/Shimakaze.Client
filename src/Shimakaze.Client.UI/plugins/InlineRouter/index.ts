@@ -7,16 +7,21 @@ import { normalizePath, type Plugin } from 'vite'
 interface InlineRouterContext {
   path: string
   layout?: string
+  isProps: boolean
 }
 
-const name = 'vite-plugin-inline-router---'
-const virtualModuleId = 'virtual:inline-router---'
+interface _InlineRouterContext extends InlineRouterContext {
+  file: string
+}
+
+const name = 'vite-plugin-inline-router'
+const virtualModuleId = 'virtual:inline-router'
 const resolvedVirtualModuleId = `\0${virtualModuleId}`
 let _config: InlineRouter.InlineRouterConfig
 
-const builderVar: Record<string, InlineRouterContext> = {}
+const _targets: Record<string, InlineRouterContext> = {}
 
-const parser = async (path: string): Promise<void> => {
+const _parser = async (path: string): Promise<void> => {
   // 用于在虚拟文件中导入用的路径
   const importPath = _config.pathHandler(
     normalizePath(
@@ -37,12 +42,76 @@ const parser = async (path: string): Promise<void> => {
 
   if (!attributes || !('path' in attributes)) return
 
-  console.info('page:', attributes.path, 'as', importPath)
+  console.info('route:', attributes.path, 'to', importPath)
 
-  builderVar[importPath] = {
+  _targets[importPath] = {
+    ...attributes,
     path: attributes.path,
-    ...attributes
+    isProps: 'props' in attributes
   }
+}
+
+const _defaultLayout = '(root)'
+const _getLayoutName = (layout?: string): string => layout ?? _defaultLayout
+const _getRouteItem = (ctx: _InlineRouterContext): string => {
+  let code: string = ''
+  code += '{'
+  code += 'path:'
+  code += ` '${ctx.path}',`
+  code += 'component:'
+  code += ` async () => await import('${ctx.file}').then(i => i.default),`
+  if (ctx.isProps) {
+    code += 'props: true,'
+  }
+  code += '}'
+  return code
+}
+const _getRouteChildrenItem = (
+  layout: string,
+  arr: _InlineRouterContext[]
+): string => {
+  if (!_config.layoutHandler) {
+    throw new Error("You must set the 'layoutHandler'.")
+  }
+
+  let code: string = ''
+  code += '{'
+  code += 'path:'
+  code += ` '/>layout-${layout}',`
+  code += 'component: async () =>'
+  code += ` await import('${_config.layoutHandler(layout)}')`
+  code += '.then(i => i.default),'
+  code += 'children: [\n  '
+  code += `  ${arr.map(_getRouteItem).join(',\n    ')}`
+  code += '\n  ]'
+  code += '}'
+  return code
+}
+
+const _builder = (): string => {
+  const map = Object
+    .entries(_targets)
+    // 将map转换为array
+    .map<_InlineRouterContext>(([file, ctx]) => ({ file, ...ctx }))
+    // 按layout分组
+    .reduce<Record<string, _InlineRouterContext[]>>(
+    (obj, i) => ({
+      ...obj,
+      [_getLayoutName(i.layout)]: [...(obj[_getLayoutName(i.layout)] ?? []), i]
+    }), {})
+
+  const code = Object.entries(map)
+    .map(([layout, arr]) => {
+      if (layout === _defaultLayout) {
+        return arr.map(_getRouteItem).join(',\n  ')
+      }
+
+      return _getRouteChildrenItem(layout, arr)
+    })
+    .join(',\n  ')
+
+  return `export default [\n  ${code}\n]
+`
 }
 
 const inlineRouter = (config: InlineRouter.InlineRouterConfig): Plugin => {
@@ -52,7 +121,7 @@ const inlineRouter = (config: InlineRouter.InlineRouterConfig): Plugin => {
     async buildStart (options) {
       await glob(config.source, {
         absolute: true
-      }).then(i => i.map(parser))
+      }).then(i => i.map(_parser))
     },
     async handleHotUpdate (ctx) {
       const path = ctx.file.replace(ctx.server.config.root, '').substring(1)
@@ -60,7 +129,7 @@ const inlineRouter = (config: InlineRouter.InlineRouterConfig): Plugin => {
         return
       }
 
-      await parser(path)
+      await _parser(path)
 
       ctx.server.ws.send({
         type: 'update',
@@ -77,6 +146,12 @@ const inlineRouter = (config: InlineRouter.InlineRouterConfig): Plugin => {
     resolveId (source, importer, options) {
       if (source !== virtualModuleId) return
       return resolvedVirtualModuleId
+    },
+    load (id, options) {
+      if (id !== resolvedVirtualModuleId) return
+      const code = _builder()
+      // console.log(`\n\n${code}\n\n`)
+      return code
     }
   }
 }

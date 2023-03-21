@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
-import InlineRouter from './plugins/inline-router'
 import inlineRouter from './plugins/InlineRouter'
 
 // https://vitejs.dev/config/
@@ -10,9 +9,9 @@ export default defineConfig({
     inlineRouter({
       source: 'src/pages/**/*.vue',
       base: __dirname,
-      pathHandler: s => s.replace('/src', '@')
+      pathHandler: s => s.replace('/src/pages', '@p'),
+      layoutHandler: l => `@l/${l}.vue`
     }),
-    InlineRouter(),
     vue()
   ],
 
@@ -42,6 +41,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       '@a': path.resolve(__dirname, 'src', 'apis'),
       '@p': path.resolve(__dirname, 'src', 'pages'),
+      '@l': path.resolve(__dirname, 'src', 'layouts'),
       /* eslint-enable @typescript-eslint/comma-dangle */
     }
   }
