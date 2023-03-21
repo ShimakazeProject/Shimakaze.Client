@@ -7,7 +7,13 @@
     "dev": "concurrently -k 'tauri dev' 'vue-devtools'",
     "build": "tauri build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "lint": "concurrently 'yarn:lint:*(!fix)'",
+    "lint:code": "eslint './src/**/*.{vue,ts,tsx,js,jsx}'",
+    "lint:style": "stylelint './src/**/*.{css,sass,scss,vue}'",
+    "lint:fix": "concurrently 'yarn:lint:fix:*'",
+    "lint:fix:code": "eslint './src/**/*.{vue,ts,tsx,js,jsx}' --fix",
+    "lint:fix:style": "stylelint './src/**/*.{css,sass,scss,vue}' --fix"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
