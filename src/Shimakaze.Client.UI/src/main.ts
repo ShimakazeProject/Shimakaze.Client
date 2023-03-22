@@ -2,7 +2,7 @@ import App from '@/App.vue'
 import { router } from '@/routers'
 import '@/styles/global.sass'
 import { createPinia } from 'pinia'
-import piniaPersist from 'pinia-plugin-persist'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'
 
 if (import.meta.env.MODE === 'development') {
@@ -14,7 +14,7 @@ if (import.meta.env.MODE === 'development') {
 createApp(App)
   .use(
     createPinia()
-      .use(piniaPersist)
+      .use(piniaPluginPersistedstate)
   )
   .use(router)
   .mount('#app')

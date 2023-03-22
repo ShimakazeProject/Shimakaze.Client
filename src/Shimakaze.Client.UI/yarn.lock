@@ -4347,19 +4347,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia-plugin-persist@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "pinia-plugin-persist@npm:1.0.0"
-  dependencies:
-    vue-demi: ^0.12.1
+"pinia-plugin-persistedstate@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "pinia-plugin-persistedstate@npm:3.1.0"
   peerDependencies:
-    "@vue/composition-api": ^1.0.0
     pinia: ^2.0.0
-    vue: ^2.0.0 || >=3.0.0
-  peerDependenciesMeta:
-    "@vue/composition-api":
-      optional: true
-  checksum: 49335d720751d00e990bdb4e0a8a90a67c617b4402a55c7427bfdb2f2b60bdb5a75745d94cc7aa227eb41248fb8ca5c607816d2d482878e3a0113b8cd32fdc2e
+  checksum: 00f5c3b580ec4fffcd0f9cb8dab2cb0dedf9a119034e5385df4c06682e78933cfd85203b602632e0c696dd95ccace5bee21381695319bbd4f6b70ce7115f5140
   languageName: node
   linkType: hard
 
@@ -4948,7 +4941,7 @@ __metadata:
     htmlparser2: ^8.0.1
     minimatch: ^7.4.2
     pinia: ^2.0.33
-    pinia-plugin-persist: ^1.0.0
+    pinia-plugin-persistedstate: ^3.1.0
     postcss-html: ^1.5.0
     sass: ^1.59.3
     stylelint: ^15.3.0
@@ -5806,22 +5799,6 @@ __metadata:
     vue-demi-fix: bin/vue-demi-fix.js
     vue-demi-switch: bin/vue-demi-switch.js
   checksum: 0fbe9bf8ab7fe498ffa2bbd0cfc8f6f43a6bbaa5eda3e20ef1b70dca7c8b0ddb216a7ff2f632b694fe0735805638975abb441c621ec0bd2e6d4656353f316c15
-  languageName: node
-  linkType: hard
-
-"vue-demi@npm:^0.12.1":
-  version: 0.12.5
-  resolution: "vue-demi@npm:0.12.5"
-  peerDependencies:
-    "@vue/composition-api": ^1.0.0-rc.1
-    vue: ^3.0.0-0 || ^2.6.0
-  peerDependenciesMeta:
-    "@vue/composition-api":
-      optional: true
-  bin:
-    vue-demi-fix: bin/vue-demi-fix.js
-    vue-demi-switch: bin/vue-demi-switch.js
-  checksum: 40a0470caea8312e0d4df2541f141c36c768dfc7f2f7d41f0f28ba29df11d3119e2f09b94c815f13b7c7f3f45dbc247b0e9e0c02a1800e2823e241c1d771e39b
   languageName: node
   linkType: hard
 

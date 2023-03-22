@@ -1,33 +1,29 @@
 <template>
 <div class="top-bar">
-  <div class="level-bar" :style="{width: `${per}%`}" />
+  <div class="level-bar" :style="{width: `${account.levelProgress}%`}" />
 
   <div class="avatar">
     <img src="/avatar.jpg" alt="avatar">
   </div>
 
   <div class="level">
-    {{ level }}
+    {{ account.level }}
   </div>
 
   <div class="info">
     <div class="account">
-      {{ name }}
+      {{ account.name }}
     </div>
     <div class="descriptions">
-      {{ desc }}
+      {{ account.desc }}
     </div>
   </div>
 </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
-const per = ref(50)
-const level = ref(99)
-const name = ref('frg2089')
-const desc = ref('开发者')
+import { useAccountStore } from '@/repositories/account'
+const account = useAccountStore()
 </script>
 
 <style lang="sass">
