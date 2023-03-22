@@ -16,8 +16,8 @@ import TopBar from '@/components/TopBar.vue'
 </script>
 
 <style lang="sass">
-.top-bar-enter-active
-  transition: all 3s ease
+.top-bar-active
+  transition: all 0.5s ease
 
 .top-bar-from
   transform: translateY(calc(-100vh / 16))
