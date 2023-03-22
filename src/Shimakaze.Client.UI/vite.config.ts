@@ -9,7 +9,9 @@ export default defineConfig({
     inlineRouter({
       source: 'src/pages/**/*.vue',
       base: __dirname,
-      pathHandler: s => s.replace('/src/pages', '@p'),
+      pathHandler: s => s
+        .replace('src/pages', '@p')
+        .replace('/@p', '@p'),
       layoutHandler: l => `@l/${l}.vue`
     }),
     vue()
