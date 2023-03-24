@@ -1,31 +1,80 @@
-﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.SDK/0.5.75-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.SDK/0.5.78-alpha">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <!-- Hack CoreCompile -->
-    <NewBuildCommand>yarn tauri dev --exit-on-panic</NewBuildCommand>
-    <ProductionBuildCommand>yarn tauri build</ProductionBuildCommand>
-    <StartupCommand>yarn tauri dev</StartupCommand>
+    <BuildCommand>yarn build:debug</BuildCommand>
+    <ProductionBuildCommand>yarn build:release</ProductionBuildCommand>
+    <StartupCommand>yarn dev</StartupCommand>
     <BuildOutputFolder>dist</BuildOutputFolder>
+
+    <!-- Hack -->
+    <ShouldRunYarnInstall>true</ShouldRunYarnInstall>
+    <NpmInstallCheck>$(BuildCommandWorkingDirectory)yarn.lock</NpmInstallCheck>
   </PropertyGroup>
 
-  <Target Name="BuildBackEnd" BeforeTargets="NewCoreCompile">
+  <Target
+    Name="BuildBackEnd"
+    BeforeTargets="CoreCompile"
+    Inputs="$(MSBuildThisFileDirectory)../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj"
+    Outputs="$(MSBuildThisFileDirectory)src-tauri/lib/Shimakaze.Client.Kernel.dll"
+  >
+    <PropertyGroup>
+      <_TauriPath>$(MSBuildThisFileDirectory)src-tauri/</_TauriPath>
+      <_AssetsPath>$(_TauriPath)Assets/</_AssetsPath>
+      <_BackendPath>$(_TauriPath)lib/</_BackendPath>
+      <_BinPath>$(_TauriPath)bin/</_BinPath>
+      <_BackendAssetsPath>$(_BackendPath)Assets/</_BackendAssetsPath>
+    </PropertyGroup>
     <ItemGroup>
-      <AssetsFile Include="$(MSBuildThisFileDirectory)../Shimakaze.Client.Kernel/Assets/**/*"/>
+      <_AssetsFile Include="$(_BackendAssetsPath)**/*" />
     </ItemGroup>
+
     <MSBuild
       Projects="$(MSBuildThisFileDirectory)../Shimakaze.Client.Kernel/Shimakaze.Client.Kernel.csproj"
-      Properties="OutputPath=$(MSBuildThisFileDirectory)src-tauri/bin;CopyAssets=false" />
+      Properties="OutputPath=$(_BackendPath)" />
 
-    <Copy SourceFiles="@(AssetsFile)"
-      DestinationFiles="$(MSBuildThisFileDirectory)src-tauri/Assets/%(RecursiveDir)%(Filename)%(Extension)"
-      SkipUnchangedFiles="true" />
+    <Move
+      SourceFiles="@(_AssetsFile)"
+      DestinationFiles="$(_AssetsPath)%(RecursiveDir)%(Filename)%(Extension)" />
+
+    <Move
+      SourceFiles="$(_BackendPath)Shimakaze.Client.Kernel.exe"
+      DestinationFiles="$(_BinPath)Shimakaze.Client.Kernel-x86_64-pc-windows-msvc.exe" />
   </Target>
 
   <!-- Hack CoreCompile -->
   <Target Name="NewCoreCompile" BeforeTargets="CoreCompile">
-    <Exec Command="$(NewBuildCommand)" WorkingDirectory="$(BuildCommandWorkingDirectory)"
-      Condition=" '$(NewBuildCommand)' != '' " UseUtf8Encoding="Always" />
+    <Exec
+      Command="$(BuildCommand)"
+      WorkingDirectory="$(BuildCommandWorkingDirectory)"
+      Condition=" '$(BuildCommand)' != '' "
+      UseUtf8Encoding="Always" />
+    <PropertyGroup>
+      <BuildCommand></BuildCommand>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Hack RunNpmInstall -->
+  <Target
+    Name="RunYarnInstall"
+    BeforeTargets="RunNpmInstall"
+    Condition=" $(ShouldRunYarnInstall) == 'true' "
+    Inputs="$(BuildWorkingDirectory)package.json"
+    Outputs="$(NpmInstallCheck)"
+  >
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCodeNpmVersion" />
+    </Exec>
+    <Error Condition="'$(ErrorCodeNpmVersion)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'yarn'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(BuildCommandWorkingDirectory)" Command="yarn install" UseUtf8Encoding="Always">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCodeNpmInstall" />
+    </Exec>
+    <Touch Files="$(NpmInstallCheck)" Condition="'$(ErrorCodeNpmInstall)' == '0'" AlwaysCreate="true" />
+    <PropertyGroup>
+      <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
+    </PropertyGroup>
   </Target>
 
 </Project>

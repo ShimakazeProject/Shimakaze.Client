@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k 'tauri dev' 'vue-devtools'",
-    "build": "tauri build",
+    "dev": "concurrently -k 'tauri dev --exit-on-panic' 'vue-devtools'",
+    "build": "yarn build:release",
+    "build:debug": "tauri build --debug --bundles",
+    "build:release": "tauri build",
     "preview": "vite preview",
     "tauri": "tauri",
     "lint": "concurrently 'yarn:lint:*(!fix)'",

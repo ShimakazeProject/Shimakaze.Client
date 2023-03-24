@@ -20,4 +20,18 @@
     </None>
   </ItemGroup>
 
+
+  <Target Name="CreateAppHostHack" AfterTargets="_CreateAppHost">
+    <CreateAppHost
+      AppHostSourcePath="$(AppHostSourcePath)"
+      AppHostDestinationPath="$(AppHostIntermediatePath)"
+      AppBinaryName="lib/$(AssemblyName)$(TargetExt)"
+      IntermediateAssembly="@(IntermediateAssembly->'%(FullPath)')"
+      WindowsGraphicalUserInterface="$(_UseWindowsGraphicalUserInterface)"
+      Retries="$(CopyRetryCount)"
+      RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)"
+      EnableMacOSCodeSign="$(_EnableMacOSCodeSign)"
+    />
+  </Target>
+
 </Project>

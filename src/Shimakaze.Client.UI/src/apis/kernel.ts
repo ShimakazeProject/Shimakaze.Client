@@ -115,10 +115,7 @@ const parser = (json: string): void => {
 
 if (!window.kernel) {
   const jrpcPool: Record<string, ApiTypes.KernelCallback> = {}
-  const command = new Command(
-    'Shimakaze.Client.Kernel',
-    'bin/Shimakaze.Client.Kernel.dll'
-  )
+  const command = Command.sidecar('bin/Shimakaze.Client.Kernel')
   const child = await command.spawn()
   command.stdout.on('data', parser)
   command.stderr.on('data', console.error)
