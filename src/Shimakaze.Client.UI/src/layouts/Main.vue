@@ -1,9 +1,9 @@
 <template>
 <Transition
   appear
-  appear-from-class="top-bar-from"
-  appear-active-class="top-bar-active"
-  appear-to-class="top-bar-to"
+  appear-from-class="from"
+  appear-active-class="active"
+  appear-to-class="to"
 >
   <TopBar />
 </Transition>
@@ -15,14 +15,6 @@ import TopBar from '@/components/TopBar.vue'
 
 </script>
 
-<style lang="sass">
-.top-bar-active
-  transition: all 0.5s ease
-
-.top-bar-from
-  transform: translateY(calc(-100vh / 16))
-
-.top-bar-to
-  transform: unset
-
+<style lang="scss">
+@use "@/styles/topbar" as *;
 </style>

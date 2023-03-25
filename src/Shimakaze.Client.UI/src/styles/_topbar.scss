@@ -1,0 +1,179 @@
+@use "sass:color";
+@use "@/styles/common" as *;
+
+@mixin top-bar(
+  $height: 32,
+  $level-bar-height: 2px,
+  $opacity: 0.25,
+  $content-margin-x: 1rem,
+  $avatar-border-width: 2px,
+  $avatar-border-color: $color-neutral-tertiary-alt,
+  $level-size: 1rem,
+  $level-font-size: 0.5rem,
+  $level-border-width: 2px,
+  $account-transform: translateY(0.6rem),
+  $descriptions-opacity: 0,
+  $descriptions-y: -1.5rem,
+) {
+  background-color: color.change($color-neutral-tertiary, $alpha: $opacity);
+  height: calc(100vh / $height);
+
+  .level-bar {
+    background-color: color.change($color-theme-dark, $alpha: $opacity);
+    height: $level-bar-height;
+  }
+
+  .content {
+    height: calc(100% - $level-bar-height);
+    margin-left: $content-margin-x;
+    margin-right: $content-margin-x;
+
+    .left {
+      .avatar {
+        border-color: color.change($avatar-border-color, $alpha: $opacity);
+        border-width: $avatar-border-width;
+      }
+
+      .level {
+        border-color: color.change($color-theme-dark, $alpha: $opacity);
+        border-width: $level-border-width;
+        font-size: $level-font-size;
+        height: $level-size;
+        width: $level-size;
+      }
+
+      .info {
+        .account {
+          transform: $account-transform;
+        }
+
+        .descriptions {
+          opacity: $descriptions-opacity;
+          transform: translateY($descriptions-y);
+        }
+      }
+    }
+  }
+}
+
+.top-bar {
+  // #region 初次载入动画相关
+  // 关闭动画
+  @media screen and (prefers-reduced-motion: reduce) {
+    &.active {
+      transition: none !important;
+    }
+
+    &.from {
+      transform: unset;
+    }
+  }
+
+  &.active {
+    transition: transform 0.5s ease !important;
+  }
+
+  &.from {
+    transform: translateY(calc(-100vh / 16));
+  }
+
+  &.to {
+    transform: unset;
+  }
+
+  // #endregion
+
+  // stylelint-disable a11y/media-prefers-reduced-motion
+  @media screen and (prefers-reduced-motion: reduce) {
+    &,
+    :not(.client-button) {
+      transition: none;
+      will-change: auto;
+    }
+  }
+
+  &,
+  :not(.client-button) {
+    /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+    transition: 1s ease 0.5s;
+    will-change: auto;
+  }
+  // stylelint-enable a11y/media-prefers-reduced-motion
+
+  &.rounded {
+    border-radius: 8px 8px 0 0;
+  }
+
+  // #region 常规样式
+  @include top-bar;
+  box-sizing: border-box;
+  color: $color-white;
+  overflow: hidden;
+  position: fixed;
+  transform-origin: center top;
+  user-select: none;
+  width: 100vw;
+  z-index: 9999;
+
+  .content {
+    display: flex;
+
+    .left {
+      align-items: center;
+      column-gap: 0.5rem;
+      display: flex;
+
+      .avatar {
+        border-style: solid;
+        box-sizing: border-box;
+        height: 100%;
+
+        img {
+          height: 100%;
+          object-fit: cover;
+          vertical-align: top;
+        }
+      }
+
+      .level {
+        align-items: center;
+        border-radius: 50%;
+        border-style: solid;
+        display: flex;
+        justify-content: center;
+      }
+
+      .info {
+        .descriptions {
+          z-index: -1;
+        }
+      }
+    }
+
+    .center {
+      flex: 1;
+    }
+
+    .right {
+      align-items: center;
+      display: flex;
+
+      :not(:nth-child(1)) {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    @include top-bar(
+      16, 4px, 0.5, 2rem,
+      4px, $color-theme-primary,
+      1.5rem, 1rem, 4px,
+      unset, 1, -0.25rem
+    );
+  }
+
+  // #endregion
+}
