@@ -1,0 +1,65 @@
+@use "sass:color" as *;
+
+$color-primary: #744da9;
+$color-foreground: #323130;
+$color-background: #fff;
+
+// 主题色
+$color-theme-primary: adjust($color-primary, $lightness: 0%);
+$color-theme-secondary: adjust($color-primary, $lightness: 5%);
+$color-theme-tertiary: adjust($color-primary, $lightness: 18.5%);
+$color-theme-lighter-alt: adjust($color-primary, $lightness: 49%);
+$color-theme-lighter: adjust($color-primary, $lightness: 42%);
+$color-theme-light: adjust($color-primary, $lightness: 34%);
+$color-theme-darker-alt: adjust($color-primary, $lightness: -5%);
+$color-theme-darker: adjust($color-primary, $lightness: -21%);
+$color-theme-dark: adjust($color-primary, $lightness: -12%);
+
+// 中性色
+$color-neutral-lighter-alt: adjust($color-background, $lightness: -2%);
+$color-neutral-lighter: adjust($color-background, $lightness: -5%);
+$color-neutral-light: adjust($color-background, $lightness: -7%);
+$color-neutral-quaternary-alt: adjust($color-background, $lightness: -12%);
+$color-neutral-quaternary: adjust($color-background, $lightness: -18.5%);
+$color-neutral-tertiary-alt: adjust($color-background, $lightness: -22%);
+$color-neutral-tertiary: adjust($color-foreground, $lightness: 43%);
+$color-neutral-secondary-alt: adjust($color-foreground, $lightness: 34%);
+$color-neutral-secondary: adjust($color-foreground, $lightness: 17.5%);
+$color-neutral-primary-alt: adjust($color-foreground, $lightness: 3.5%);
+$color-neutral-primary: adjust($color-foreground);
+$color-neutral-dark: adjust($color-foreground, $lightness: -7%);
+
+// 黑白
+$color-black: adjust($color-foreground, $lightness: -22%);
+$color-white: adjust($color-background, $lightness: 0%);
+
+:root {
+  // 主题色
+  --color-theme-primary: $color-theme-primary;
+  --color-theme-secondary: $color-theme-secondary;
+  --color-theme-tertiary: $color-theme-tertiary;
+  --color-theme-lighter-alt: $color-theme-lighter-alt;
+  --color-theme-lighter: $color-theme-lighter;
+  --color-theme-light: $color-theme-light;
+  --color-theme-darker-alt: $color-theme-darker-alt;
+  --color-theme-darker: $color-theme-darker;
+  --color-theme-dark: $color-theme-dark;
+
+  // 中性色
+  --color-neutral-lighter-alt: $color-neutral-lighter-alt;
+  --color-neutral-lighter: $color-neutral-lighter;
+  --color-neutral-light: $color-neutral-light;
+  --color-neutral-quaternary-alt: $color-neutral-quaternary-alt;
+  --color-neutral-quaternary: $color-neutral-quaternary;
+  --color-neutral-tertiary-alt: $color-neutral-tertiary-alt;
+  --color-neutral-tertiary: $color-neutral-tertiary;
+  --color-neutral-secondary-alt: $color-neutral-secondary-alt;
+  --color-neutral-secondary: $color-neutral-secondary;
+  --color-neutral-primary-alt: $color-neutral-primary-alt;
+  --color-neutral-primary: $color-neutral-primary;
+  --color-neutral-dark: $color-neutral-dark;
+
+  // 黑白
+  --color-black: $color-black;
+  --color-white: $color-white;
+}

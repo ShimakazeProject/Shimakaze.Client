@@ -1,6 +1,6 @@
 import App from '@/App.vue'
 import { router } from '@/routers'
-import '@/styles/global.sass'
+import '@/styles/global.scss'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createApp } from 'vue'

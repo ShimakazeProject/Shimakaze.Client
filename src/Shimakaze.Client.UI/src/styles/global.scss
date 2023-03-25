@@ -1,0 +1,23 @@
+@use "@/styles/common";
+
+.page {
+  position: relative;
+}
+
+:root {
+  color: var(--sc-white);
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  body {
+    border-radius: 8px;
+    height: 100vh;
+    margin: inherit;
+    overflow: hidden;
+
+    .page {
+      height: 100vh;
+    }
+  }
+}
