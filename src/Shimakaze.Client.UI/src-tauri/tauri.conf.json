@@ -23,6 +23,17 @@
             "sidecar": true
           }
         ]
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
       }
     },
     "bundle": {
@@ -84,8 +95,10 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "shimakaze-client-ui",
-        "width": 800
+        "title": "Shimakaze Client",
+        "decorations": false,
+        "width": 800,
+        "transparent": true
       }
     ]
   }
