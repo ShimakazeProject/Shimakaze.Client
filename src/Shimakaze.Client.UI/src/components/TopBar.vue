@@ -59,7 +59,7 @@
           hoverBackground: 'red',
           activeBackground: 'red'
         }"
-        @click="appWindow.close()"
+        @click="router.push('/bye')"
       >
         ×
       </Button>
@@ -71,6 +71,8 @@
 <script lang="ts" setup>
 import { useAccountStore } from '@/repositories/account'
 import { appWindow } from '@tauri-apps/api/window'
+import { useRouter } from 'vue-router'
 import Button from './Button.vue'
+const router = useRouter()
 const account = useAccountStore()
 </script>
