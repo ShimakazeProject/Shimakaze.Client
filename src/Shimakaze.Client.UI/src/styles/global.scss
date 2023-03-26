@@ -11,7 +11,6 @@
   position: relative;
 
   body {
-    border-radius: 8px;
     height: 100vh;
     margin: inherit;
     overflow: hidden;
@@ -19,5 +18,10 @@
     .page {
       height: 100vh;
     }
+  }
+
+  [rounded] {
+    border-radius: 8px;
+    overflow: hidden;
   }
 }
