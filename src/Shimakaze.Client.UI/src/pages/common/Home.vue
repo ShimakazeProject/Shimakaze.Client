@@ -1,5 +1,5 @@
 <!-- 主菜单页面 -->
-<template path="/home">
+<template path="/home" layout="Main">
 <div class="page home">
   <div class="button-pane">
     <div class="space" />
@@ -17,11 +17,12 @@
 
 <script lang="ts" setup>
 import Button from '@/components/Button.vue'
-import { router } from '@/router'
 import { getMainMenus } from '@/services/main'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 /* global Services */
 
+const router = useRouter()
 const buttons = ref<Services.Button[]>()
 
 onMounted(async () => {
@@ -30,19 +31,21 @@ onMounted(async () => {
 
 </script>
 
-<style lang="sass">
-.page.home
+<style lang="scss">
+.page.home {
+  .button-pane {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 1rem);
+    position: absolute;
+    right: 1rem;
+    row-gap: 1rem;
+    top: 0;
+    width: 12rem;
 
-  .button-pane
-    width: 12rem
-    height: calc(100% - 1rem)
-    display: flex
-    flex-direction: column
-    row-gap: 1rem
-    position: absolute
-    right: 1rem
-    top: 0
-
-    .space
-      flex: 1
+    .space {
+      flex: 1;
+    }
+  }
+}
 </style>
