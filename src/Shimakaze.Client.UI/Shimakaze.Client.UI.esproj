@@ -1,15 +1,10 @@
-﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.SDK/0.5.78-alpha">
+﻿<Project Sdk="Shimakaze.Sdk.NodeJS/0.0.1">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <BuildCommand>yarn build:debug</BuildCommand>
-    <ProductionBuildCommand>yarn build:release</ProductionBuildCommand>
-    <StartupCommand>yarn dev</StartupCommand>
-    <BuildOutputFolder>dist</BuildOutputFolder>
-
-    <!-- Hack -->
-    <ShouldRunYarnInstall>true</ShouldRunYarnInstall>
-    <NpmInstallCheck>$(BuildCommandWorkingDirectory)yarn.lock</NpmInstallCheck>
+    <LockFile>yarn.lock</LockFile>
+    <RestoreCommand>yarn install</RestoreCommand>
+    <BuildCommand Condition=" '$(Configuration)' == 'Debug' ">yarn build:debug</BuildCommand>
+    <BuildCommand Condition=" '$(Configuration)' == 'Release' ">yarn build:release</BuildCommand>
   </PropertyGroup>
 
   <Target
@@ -41,40 +36,4 @@
       SourceFiles="$(_BackendPath)Shimakaze.Client.Kernel.exe"
       DestinationFiles="$(_BinPath)Shimakaze.Client.Kernel-x86_64-pc-windows-msvc.exe" />
   </Target>
-
-  <!-- Hack CoreCompile -->
-  <Target Name="NewCoreCompile" BeforeTargets="CoreCompile">
-    <Exec
-      Command="$(BuildCommand)"
-      WorkingDirectory="$(BuildCommandWorkingDirectory)"
-      Condition=" '$(BuildCommand)' != '' "
-      UseUtf8Encoding="Always" />
-    <PropertyGroup>
-      <BuildCommand></BuildCommand>
-    </PropertyGroup>
-  </Target>
-
-  <!-- Hack RunNpmInstall -->
-  <Target
-    Name="RunYarnInstall"
-    BeforeTargets="RunNpmInstall"
-    Condition=" $(ShouldRunYarnInstall) == 'true' "
-    Inputs="$(BuildWorkingDirectory)package.json"
-    Outputs="$(NpmInstallCheck)"
-  >
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCodeNpmVersion" />
-    </Exec>
-    <Error Condition="'$(ErrorCodeNpmVersion)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'yarn'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(BuildCommandWorkingDirectory)" Command="yarn install" UseUtf8Encoding="Always">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCodeNpmInstall" />
-    </Exec>
-    <Touch Files="$(NpmInstallCheck)" Condition="'$(ErrorCodeNpmInstall)' == '0'" AlwaysCreate="true" />
-    <PropertyGroup>
-      <ShouldRunNpmInstall>false</ShouldRunNpmInstall>
-    </PropertyGroup>
-  </Target>
-
 </Project>
