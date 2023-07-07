@@ -43,7 +43,7 @@
     "minimatch": "^7.4.2",
     "postcss-html": "^1.5.0",
     "sass": "^1.59.3",
-    "stylelint": "^15.3.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-spaceninja": "^12.0.0",
     "stylelint-config-standard-vue": "^1.0.0",
     "typescript": "*",
