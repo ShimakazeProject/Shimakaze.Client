@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csdevkit",
+    "redhat.vscode-xml",
+    "deitry.msbuild-solution-syntax"
+  ]
+}
